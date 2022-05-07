@@ -6,18 +6,16 @@ import Upload from '~/pages/Upload'
 import Search from '~/pages/Search'
 
 // Layouts
-import { HeaderOnly } from '~/components/Layout'
+import { HeaderOnly } from '~/components/Layouts'
 
 const publicRoutes = [
   { path: '/', component: Home },
   { path: '/following', component: Following },
   { path: '/profile', component: Profile },
   { path: '/upload', component: Upload, layout: HeaderOnly },
-  { path: '/search', component: Search, layout: null },
+  { path: '/search', component: Search, layout: null }
 ]
 
-const privateRoutes = [
-
-]
+const privateRoutes = []
 
 export { publicRoutes, privateRoutes }
