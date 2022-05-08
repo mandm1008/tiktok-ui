@@ -23,4 +23,11 @@ body {
   font-size: 1.6rem;
   font-family: 'Fira Sans', sans-serif;
   line-height: 1.5;
+  text-rendering: optimizespeed;
+}
+
+button,
+input {
+  border: none;
+  outline: none;
 }
