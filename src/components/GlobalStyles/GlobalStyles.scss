@@ -3,6 +3,8 @@
 
 :root {
   --primary: #fe2c55;
+  --black: #000;
+  --while: #fff;
 
   // default layout
   --default-layout-header-height: 60px;
@@ -30,4 +32,9 @@ button,
 input {
   border: none;
   outline: none;
+}
+
+input[href] {
+  text-decoration: none;
+  color: var(--black);
 }
