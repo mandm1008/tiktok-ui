@@ -1,82 +1,170 @@
-import { useEffect, useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import classNames from 'classnames/bind'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faCircleXmark, faEllipsisVertical, faLanguage } from '@fortawesome/free-solid-svg-icons'
 
 import imgs from '~/assets/imgs'
 import styles from './Header.module.scss'
-import { Wrapper as PopperWrapper } from '~/components/Popper'
-import { SearchAccount as Account } from '~/components/Account'
+import { Menu } from '~/components/Popper'
+import Search from '../Search'
 import Button from '~/components/Button'
+import {
+  InboxIcon,
+  KeyboardIcon,
+  LanguageIcon,
+  LogOutIcon,
+  MenuIcon,
+  MessageIcon,
+  QuestionIcon,
+  SettingIcon,
+  TiktokIcon,
+  UploadIcon,
+  UserIcon
+} from '~/components/Icons'
+import Image from '~/components/Image'
 
 const cx = classNames.bind(styles)
 
 function Header() {
-  const [searchResults, setSearchResults] = useState([])
+  let currentUser = true
 
-  useEffect(() => {
-    setTimeout(() => {
-      setSearchResults([1])
-    }, 500)
-  }, [])
+  const dataMenu = [
+    {
+      icon: LanguageIcon,
+      title: 'English',
+      subMenu: {
+        title: 'Language',
+        data: [
+          {
+            code: 'en',
+            title: 'English'
+          },
+          {
+            code: 'vi',
+            title: 'Tiếng Việt'
+          }
+        ]
+      }
+    },
+    {
+      icon: QuestionIcon,
+      title: 'Feedback and help',
+      to: '/feedback'
+    },
+    {
+      icon: KeyboardIcon,
+      title: 'Keyboard Shortcuts',
+      modal: true
+    }
+  ]
+
+  const dataUser = [
+    {
+      icon: UserIcon,
+      title: 'View Profile',
+      to: '/profile'
+    },
+    {
+      icon: TiktokIcon,
+      title: 'Get coins',
+      to: '/coin'
+    },
+    {
+      icon: SettingIcon,
+      title: 'Setting',
+      to: '/setting'
+    },
+    ...dataMenu,
+    {
+      icon: LogOutIcon,
+      title: 'Log out',
+      to: '/logout',
+      spacer: true
+    }
+  ]
 
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <img src={imgs.logo} className={cx('logo')} alt="Tiktok" />
 
-        <div>
-          <Tippy
-            interactive
-            visible={searchResults.length > 0}
-            render={(attrs) => (
-              <div className={cx('search-results')} tabIndex="-1" {...attrs}>
-                <PopperWrapper>
-                  <div className={cx('any-search')}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    <h4 className={cx('any-search-title')}>styles</h4>
-                  </div>
-                  <h4 className={cx('account')}>Accounts</h4>
-                  <Account />
-                  <Account />
-                  <h4 className={cx('view-all')}>View all results for ""</h4>
-                </PopperWrapper>
-              </div>
-            )}
-          >
-            <div className={cx('search')}>
-              <input type="text" placeholder="Search accounts and videos ..." spellCheck={false} />
-              <FontAwesomeIcon className={cx('clear', 'active')} icon={faCircleXmark} />
-              {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
-              <button className={cx('search-btn')}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-            </div>
-          </Tippy>
-        </div>
+        <Search />
 
         <div className={cx('actions')}>
-          <Button underline>Upload</Button>
-          <Button primary>Log in</Button>
-          {/* <Tippy
-            interactive
-            visible
-            render={(attrs) => (
-              <div className={cx('menu-popper')} tabIndex="-1" {...attrs}>
-                <PopperWrapper>
-                  <div className={cx('menu-item')}>
-                    <FontAwesomeIcon className={cx('menu-icon')} icon={faLanguage} />
-                    <h4 className={cx('menu-title')}>English</h4>
+          {currentUser ? (
+            <>
+              <Tippy
+                interactive
+                placement="bottom"
+                delay={[0, 200]}
+                render={(attrs) => (
+                  <div className={cx('user-popper')} tabIndex="-1" {...attrs}>
+                    Upload
                   </div>
-                </PopperWrapper>
+                )}
+              >
+                <div className={cx('user-wrapper-btn')}>
+                  <Button className={cx('user-btn')} to="/upload">
+                    <UploadIcon />
+                  </Button>
+                </div>
+              </Tippy>
+
+              <Tippy
+                interactive
+                placement="bottom"
+                delay={[0, 200]}
+                render={(attrs) => (
+                  <div className={cx('user-popper')} tabIndex="-1" {...attrs}>
+                    Message
+                  </div>
+                )}
+              >
+                <div className={cx('user-wrapper-btn')}>
+                  <Button to="/message" className={cx('user-btn')}>
+                    <MessageIcon className={cx('message-icon')} />
+                  </Button>
+                </div>
+              </Tippy>
+
+              <Tippy
+                interactive
+                placement="bottom"
+                delay={[0, 200]}
+                render={(attrs) => (
+                  <div className={cx('user-popper')} tabIndex="-1" {...attrs}>
+                    Inbox
+                  </div>
+                )}
+              >
+                <div className={cx('user-wrapper-btn')}>
+                  <Button className={cx('user-btn')}>
+                    <InboxIcon />
+                    <span className={cx('inbox-counter')}>12</span>
+                  </Button>
+                </div>
+              </Tippy>
+
+              <div className={cx('avatar')}>
+                <Menu data={dataUser} className={cx('user-menu')}>
+                  <Image
+                    src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7097832713986441222~c5_720x720.jpeg?x-expires=1652763600&x-signature=18OagVxEshvTYMaNtM5mhoh2tCQ%3D"
+                    alt="User Avatar"
+                  />
+                </Menu>
               </div>
-            )}
-          >
-            <div className={cx('menu')}>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </div>
-          </Tippy> */}
+            </>
+          ) : (
+            <>
+              <Button underline>Upload</Button>
+              <Button primary>Log in</Button>
+              <div className={cx('menu')}>
+                <Menu data={dataMenu}>
+                  <div className={cx('menu-wrapper')}>
+                    <MenuIcon />
+                  </div>
+                </Menu>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

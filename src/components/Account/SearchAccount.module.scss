@@ -4,6 +4,8 @@
   width: 100%;
   display: flex;
   align-items: center;
+  color: var(--black);
+  text-decoration: none;
 
   &:hover {
     background-color: rgba(22, 24, 35, 0.03);
@@ -26,6 +28,10 @@
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 2.2rem;
+}
+
+.tick-icon {
+  margin-left: 8px;
 }
 
 .message {

@@ -8,17 +8,4 @@
   border-radius: 8px;
   padding-top: 8px;
   overflow: hidden auto;
-
-  &::-webkit-scrollbar-track {
-    border-radius: 0px;
-    background-color: transparent;
-  }
-  &::-webkit-scrollbar {
-    border-radius: 0px;
-    width: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.15);
-  }
 }
